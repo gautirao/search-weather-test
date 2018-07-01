@@ -1,15 +1,25 @@
-import { Component, OnChanges } from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
+import {SearchResult} from '../../../model/SearchResult';
+import {Observable} from 'rxjs/Observable';
+import {Store} from '@ngrx/store';
+import {getSearchResults, State} from '../../store/reducers/weather';
 
 @Component({
-  selector: 'app-results',
-  templateUrl: './results.component.html'
+    selector: 'app-results',
+    templateUrl: './results.component.html'
 })
 export class ResultsComponent implements OnChanges {
-  constructor() { }
 
-  ngOnChanges() {
-    // IMPLEMENT ANYTHING YOU BEKIEVE YOU MIGHT NEED HERE
-  }
+    searchResults: Observable<SearchResult[]>;
+
+    constructor(private store: Store<State>) {
+        this.searchResults = this.store.select(getSearchResults);
+        console.log(this.searchResults);
+    }
+
+    ngOnChanges() {
+        // IMPLEMENT ANYTHING YOU BEKIEVE YOU MIGHT NEED HERE
+    }
 }
 
 

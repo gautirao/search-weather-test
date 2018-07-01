@@ -9,12 +9,22 @@
   </tr>
   </thead>
   <tbody>
-  <tr>
-    <td scope="row">London</td>
-    <td scope="row">3 &deg;</td>
-    <td scope="row">12.5 &deg;</td>
-    <td scope="row">9 &deg;</td>
-    <td scope="row">2 &deg;</td>
+  <tr *ngFor="let weather of searchResults | async">
+    <td scope="row">
+      {{weather.name}}
+    </td>
+    <td scope="row">
+      {{weather.tempAt6AM}}
+    </td>
+    <td scope="row">
+      {{weather.tempAt12PM}}&deg;
+    </td>
+    <td scope="row">
+      {{weather.tempAt6PM}}&deg;
+    </td>
+    <td scope="row">
+      {{weather.tempAt12AM}}&deg;
+    </td>
   </tr>
   </tbody>
 </table>

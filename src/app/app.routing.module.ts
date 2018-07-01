@@ -8,6 +8,11 @@ const appRoutes: Routes = [
     path: '',
     pathMatch: 'full',
     component: WeatherContainer
-  }
+  },
+    {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full'
+    }
 ];
 export const AppRoutingModule: ModuleWithProviders = RouterModule.forRoot(appRoutes);
