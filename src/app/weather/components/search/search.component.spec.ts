@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {SearchComponent} from './search.component';
@@ -10,10 +10,13 @@ import {EffectsModule} from '@ngrx/effects';
 import {WeatherEffects} from '../../store/effects/weather';
 import {StoreModule} from '@ngrx/store';
 import {reducer} from '../../store/reducers/weather';
+import {By} from '@angular/platform-browser';
 
 describe('SearchComponent', () => {
     let component: SearchComponent;
     let fixture: ComponentFixture<SearchComponent>;
+    let searchInput: DebugElement;
+    let searchButton: DebugElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -24,11 +27,25 @@ describe('SearchComponent', () => {
         });
         fixture = TestBed.createComponent(SearchComponent);
         component = fixture.componentInstance;
+        searchInput = fixture.debugElement.query(By.css('input[type=text]'));
+        searchButton = fixture.debugElement.query(By.css('.btn-search'));
+
     });
 
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
+    it('should emit search value when search button is clicked', () => {
+
+        spyOn(component.search, 'emit').and.callThrough();
+
+        searchInput.nativeElement.value = 'London';
+
+        searchButton.triggerEventHandler('click', null);
+
+        fixture.detectChanges();
+        fixture.whenStable().then( () => {
+            expect(component.search.emit).toHaveBeenCalledWith('London');
+        });
+
     });
 
     // IMPLEMENT TESTS HERE

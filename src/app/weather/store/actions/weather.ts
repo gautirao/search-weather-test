@@ -20,6 +20,7 @@ export class FetchWeatherDone implements Action {
     readonly type = FETCH_WEATHER_DONE;
 
     constructor(public payload: Weather) {
+        console.dir(payload);
     }
 }
 

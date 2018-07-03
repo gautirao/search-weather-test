@@ -6,11 +6,13 @@ import * as util from '../../../utils/weatherutil';
 export interface State {
     ids: number[];
     results: { [id: number]: SearchResult };
+    weatherNotFound: boolean;
 };
 
 export const initialState: State = {
     ids: [],
-    results: {}
+    results: {},
+    weatherNotFound: false
 };
 
 export function reducer(state = initialState, action: weather.Actions): State {
@@ -26,7 +28,7 @@ export function reducer(state = initialState, action: weather.Actions): State {
                     ...searchResult
                 };
 
-                return {...state}; // using the spread operator gives you a copy of state
+                return {...state, weatherNotFound: false}; // using the spread operator gives you a copy of state
             } else {
 
                 return {
@@ -34,12 +36,15 @@ export function reducer(state = initialState, action: weather.Actions): State {
                     results: {
                         ...state.results,
                         [searchResult.id]: searchResult
-                    }
+                    },
+                    weatherNotFound: false
                 };
             }
 
 
         }
+        case weather.WEATHER_NOT_FOUND :
+            return {...state, weatherNotFound: true};
         default: {
             return state;
         }
@@ -54,5 +59,7 @@ export const getWeatherState = createFeatureSelector<State>('weather');
 export const getIds = createSelector(getWeatherState, (state: State) => state.ids);
 
 export const getResults = createSelector(getWeatherState, (state: State) => state.results);
+
+export const getWeatherNotFound = createSelector(getWeatherState, (state: State) => state.weatherNotFound);
 
 export const getSearchResults = createSelector(getResults, getIds, (searchResults, searchIds) => searchIds.map((id => searchResults[id])));

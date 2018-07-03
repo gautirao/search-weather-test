@@ -1,5 +1,7 @@
 <form class="form-inline mb-5">
+
     <div class="form-group col-8 pl-0">
+
         <input #citysearch class="form-control mt-3 col"
                id="city"
                name="city"
@@ -7,7 +9,8 @@
                type="text"
                required>
     </div>
-    <button class="btn-search btn btn-primary mt-3 col-4" type="submit" (click)="searchAPI(citysearch.value)">
-        Search
-    </button>
+    <button class="btn-search btn btn-primary mt-3 col-4" type="submit" (click)="searchAPI(citysearch.value)">Search</button>
 </form>
+<div class="alert alert-danger form-control mt-3 col" *ngIf="cityNotFound" role="alert">
+    Weather data not available for the city
+</div>

@@ -12,12 +12,13 @@ export class SearchComponent implements OnInit {
     // IMPLEMENT ANY INPUT OR OUTPUT YOU MIGHT NEED
     searchResults$: Observable<SearchResult[]>;
     @Output() search = new EventEmitter<string>();
+    @Input() cityNotFound: Boolean;
 
     constructor(private store: Store<State>) {
-        this.searchResults$ = store.select(getSearchResults);
     }
 
     ngOnInit() {
+        this.searchResults$ = this.store.select(getSearchResults);
     }
 
     searchAPI(cityName: string) {

@@ -14,7 +14,6 @@ export class ResultsComponent implements OnChanges {
 
     constructor(private store: Store<State>) {
         this.searchResults = this.store.select(getSearchResults);
-        console.log(this.searchResults);
     }
 
     ngOnChanges() {
